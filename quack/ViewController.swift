@@ -13,6 +13,9 @@ class ViewController: UIViewController {
     var recorder : AVAudioRecorder?
     var recordingFileLocation : URL?
     var people : [String]? = ["Jerome", "Jeff"]
+    var audioExcerpts = [AudioExcerpt]()
+    var currentExcerpt : AudioExcerpt?
+    var currentPersonSpeaking : (name: String, startTime: TimeInterval, endTime: TimeInterval?)?
     
     @IBOutlet weak var startOrStopButton : UIBarButtonItem!
     @IBOutlet weak var collectionView : UICollectionView!
@@ -21,7 +24,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.collectionView.isUserInteractionEnabled = false
         self.recordButton.isEnabled = false
         
         self.setSessionRecord()
@@ -31,7 +33,6 @@ class ViewController: UIViewController {
         if self.recorder == nil {
             let alert = textFieldAlert(name: "Recorder", message: "Name the recording")
             alert.addAction(UIAlertAction(title: "Set title", style: .default, handler: {action in
-                print("set title was tapped")
                 self.title = alert.textFields?[0].text
                 self.startRecording()
             }))
@@ -46,7 +47,6 @@ class ViewController: UIViewController {
         
         self.startOrStopButton.title = "Stop"
         self.recordButton.isEnabled = true
-        self.collectionView.isUserInteractionEnabled = true
         self.recordWithPermission()
     }
     
@@ -54,7 +54,10 @@ class ViewController: UIViewController {
         print("stop the recording")
         self.startOrStopButton.title = "Start"
         self.recordButton.isEnabled = false
-        self.collectionView.isUserInteractionEnabled = false
+        
+        if self.currentExcerpt != nil {
+            self.stopExcerpt()
+        }
         
         self.recorder?.stop()
         let session = AVAudioSession.sharedInstance()
@@ -69,6 +72,10 @@ class ViewController: UIViewController {
         if sendToServer == true {
             // begin processing - maybe should disable view while in processing
         }
+        
+        print("audio excerpts", self.audioExcerpts)
+        
+        // Should delete all audio excerpts and put currentExcerpt at nil
     }
     
     func recordWithPermission() {
@@ -93,6 +100,37 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func createExcerpt(_ sender: UIButton) {
+        guard let currentTime = self.recorder?.currentTime else {
+            print("no recorder, no time")
+            return
+        }
+        
+        if self.currentExcerpt == nil {
+            self.currentExcerpt = AudioExcerpt(startTime: currentTime)
+            self.recordButton.setTitle("Stop Recording", for: .normal)
+        } else {
+            stopExcerpt()
+        }
+    }
+    
+    func stopExcerpt() {
+        guard let currentTime = self.recorder?.currentTime else {
+            print("no recorder, no time")
+            return
+        }
+        
+        if self.currentPersonSpeaking != nil {
+            self.deselectRow(indexPath: nil)
+        }
+        
+        self.currentExcerpt?.endTime = currentTime
+        // Feel like this ! might be ok, maybe should remove it though
+        self.audioExcerpts.append(self.currentExcerpt!)
+        print("currentExcerpt", self.currentExcerpt)
+        self.currentExcerpt = nil
+        self.recordButton.setTitle("Record", for: .normal)
+    }
     
     func setupRecorder() {
         let currentFilename : String
@@ -105,8 +143,6 @@ class ViewController: UIViewController {
         }
         
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        print("documents directory, what is this?", documentsDirectory)
-        print("more of the same", FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         self.recordingFileLocation = documentsDirectory.appendingPathComponent(currentFilename)
         print("writing to soundfile url: '\(recordingFileLocation!)'")
         
@@ -196,6 +232,33 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate 
         return cell
     }
     
+    public func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool
+    {
+        // https://stackoverflow.com/questions/35181940/how-to-add-deselecting-to-uicollectionview-but-without-multiple-selection
+        // Default behaviour doesn't allow you to unselect a cell by clicking on it again, changes to allow it
+        print("in should")
+        if (indexPath.row == self.collectionView.numberOfItems(inSection: 0) - 1) {
+            print("add row")
+            return true
+        }
+        print("after add row")
+        
+        // Stop them selecting if there is no excerpt recording happening
+        if self.currentExcerpt == nil {
+            print("there is nothing being recorded")
+            return false
+        }
+        
+        let cell = self.collectionView.cellForItem(at: indexPath)
+        if cell?.isSelected == true {
+            self.collectionView.deselectItem(at: indexPath, animated: false)
+            deselectRow(indexPath: indexPath)
+            return false
+        }
+        
+        return true
+    }
+
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if (indexPath.row == self.collectionView.numberOfItems(inSection: 0) - 1) {
             let alert = textFieldAlert(name: "Add a person", message: "Someone will be added to the list")
@@ -207,8 +270,59 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate 
                 self.collectionView.reloadData()
             }))
             self.present(alert, animated:true, completion:nil)
+            return
         }
+        
+        // TEST: while someone is speaking, add another person. Shouldn't be affected because using an array
+        
+        let cell = self.collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderWidth = 2.0
+        cell?.layer.borderColor = UIColor.gray.cgColor
+        guard let name = self.people?[indexPath.row], let startTime = self.recorder?.currentTime else {
+            // Double check this
+            self.currentPersonSpeaking = nil
+            return
+        }
+        
+        self.currentPersonSpeaking = (name: name, startTime: startTime, endTime: nil)
     }
+    
+    public func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if (indexPath.row == self.collectionView.numberOfItems(inSection: 0) - 1) {
+            return
+        }
+        
+        deselectRow(indexPath: indexPath)
+        
+    }
+    
+    func deselectRow(indexPath: IndexPath?) {
+        // Probably have something that calls endTime either from here if already selected OR directly from the select method, which gets called if you select a different row
+        var cell : UICollectionViewCell?
+        if let indexPath = indexPath {
+            cell = self.collectionView.cellForItem(at: indexPath)
+        } else {
+            if self.collectionView.indexPathsForSelectedItems?.count != 0, let indexPath = self.collectionView.indexPathsForSelectedItems?[0] {
+                cell = self.collectionView.cellForItem(at: indexPath)
+            }
+        }
+        cell?.layer.borderWidth = 0.0
+        
+        if self.currentPersonSpeaking == nil {
+            return
+        }
+        
+        guard let endTime = self.recorder?.currentTime else {
+            return
+        }
+        self.currentPersonSpeaking?.endTime = endTime as TimeInterval
+        // ! aaahh
+        self.currentExcerpt?.peopleSpeaking.append(self.currentPersonSpeaking! as! (name: String, startTime: TimeInterval, endTime: TimeInterval))
+        
+        self.currentPersonSpeaking = nil
+
+    }
+
 }
 
 extension ViewController {

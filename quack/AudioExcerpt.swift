@@ -13,8 +13,8 @@ struct AudioExcerpt {
     var startTime : TimeInterval
     var endTime : TimeInterval?
     var trimmedUrl : URL?
-    var peopleSpeaking : [(name: String, startTime: TimeInterval, endTime: TimeInterval)]?
-    var notes : [(note: String, time: TimeInterval)]?
+    var peopleSpeaking = [(name: String, startTime: TimeInterval, endTime: TimeInterval)]()
+    var notes = [(note: String, time: TimeInterval)]()
     
     init(startTime: TimeInterval) {
         self.startTime = startTime
