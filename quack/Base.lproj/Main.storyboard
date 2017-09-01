@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qBo-Fc-ah1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rmO-8e-kIr">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,6 +9,52 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Start Page View Controller-->
+        <scene sceneID="qBV-7a-Sfv">
+            <objects>
+                <viewController id="81B-VM-4c5" customClass="StartPageViewController" customModule="quack" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6Zd-Xp-s1k"/>
+                        <viewControllerLayoutGuide type="bottom" id="i0k-vZ-hNN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="a6Y-IK-haH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rYc-jY-658">
+                                <rect key="frame" x="170" y="380" width="34" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Start"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="G4D-cv-Ns1"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2kf-f5-ayx">
+                                <rect key="frame" x="73" y="342" width="249" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Event name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKu-qG-y0l">
+                                <rect key="frame" x="142" y="313" width="90" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="H3u-bK-5sQ"/>
+                    <connections>
+                        <outlet property="textField" destination="2kf-f5-ayx" id="sL0-H7-w8o"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jve-H2-kqT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1359.2" y="-537.48125937031489"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -92,39 +138,41 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="WQ4-zT-SHN">
-                        <barButtonItem key="rightBarButtonItem" title="Start" id="Z9w-4C-Ge8">
+                        <barButtonItem key="leftBarButtonItem" title="Stop" id="Y6G-CZ-t1f">
                             <connections>
-                                <action selector="startOrStopRecording:" destination="BYZ-38-t0r" id="Htb-HL-fS0"/>
+                                <action selector="stopEvent:" destination="BYZ-38-t0r" id="nUf-W9-PzF"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="Oq0-Aa-3ZL"/>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="JIf-iM-Etd" id="hjY-y9-mlL"/>
                         <outlet property="recordButton" destination="YnE-rn-Quz" id="AsY-ye-gSf"/>
-                        <outlet property="startOrStopButton" destination="Z9w-4C-Ge8" id="SeL-bz-GXK"/>
+                        <segue destination="laJ-G0-Six" kind="unwind" identifier="unwindToStart" unwindAction="unwindToRootViewControllerWithSegue:" id="gHg-zc-px2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <exit id="laJ-G0-Six" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1076" y="138.98050974512745"/>
+            <point key="canvasLocation" x="2224.8000000000002" y="-537.48125937031489"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="b4d-rP-1ch">
+        <scene sceneID="ABJ-xG-8Bq">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qBo-Fc-ah1" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rmO-8e-kIr" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="MH4-cH-fJ4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KVy-st-hgs">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="1X5-YO-oKK"/>
+                        <segue destination="81B-VM-4c5" kind="relationship" relationship="rootViewController" id="LpQ-qA-RWQ"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jcR-yU-hyL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Re4-Eo-AZ7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="133.59999999999999" y="-543.77811094452773"/>
+            <point key="canvasLocation" x="420" y="-537.48125937031489"/>
         </scene>
     </scenes>
     <resources>

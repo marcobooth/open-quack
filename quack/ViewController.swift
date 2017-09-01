@@ -17,43 +17,28 @@ class ViewController: UIViewController {
     var currentExcerpt : AudioExcerpt?
     var currentPersonSpeaking : (name: String, startTime: TimeInterval, endTime: TimeInterval?)?
     
-    @IBOutlet weak var startOrStopButton : UIBarButtonItem!
     @IBOutlet weak var collectionView : UICollectionView!
     @IBOutlet weak var recordButton : UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.recordButton.isEnabled = false
-        
-        self.setSessionRecord()
-    }
 
-    @IBAction func startOrStopRecording(_ sender: UIBarButtonItem) {
-        if self.recorder == nil {
-            let alert = textFieldAlert(name: "Recorder", message: "Name the recording")
-            alert.addAction(UIAlertAction(title: "Set title", style: .default, handler: {action in
-                self.title = alert.textFields?[0].text
-                self.startRecording()
-            }))
-            self.present(alert, animated:true, completion:nil)
-        } else {
-            self.stopRecording(sendToServer: true)
-        }
-    }
-    
-    func startRecording() {
-        print("start the recording")
-        
-        self.startOrStopButton.title = "Stop"
-        self.recordButton.isEnabled = true
+        self.setSessionRecord()
         self.recordWithPermission()
     }
     
+    @IBAction func stopEvent(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "End event", message: "Please confirm that you would like the event to end", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {action in
+            print("cancel was tapped")
+        }))
+        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: {action in
+            self.stopRecording(sendToServer: true)
+        }))
+        self.present(alert, animated:true, completion:nil)
+    }
+    
     func stopRecording(sendToServer: Bool) {
-        print("stop the recording")
-        self.startOrStopButton.title = "Start"
-        self.recordButton.isEnabled = false
         
         if self.currentExcerpt != nil {
             self.stopExcerpt()
@@ -76,6 +61,7 @@ class ViewController: UIViewController {
         print("audio excerpts", self.audioExcerpts)
         
         // Should delete all audio excerpts and put currentExcerpt at nil
+        self.performSegue(withIdentifier: "unwindToStart", sender: nil)
     }
     
     func recordWithPermission() {
@@ -236,12 +222,9 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate 
     {
         // https://stackoverflow.com/questions/35181940/how-to-add-deselecting-to-uicollectionview-but-without-multiple-selection
         // Default behaviour doesn't allow you to unselect a cell by clicking on it again, changes to allow it
-        print("in should")
         if (indexPath.row == self.collectionView.numberOfItems(inSection: 0) - 1) {
-            print("add row")
             return true
         }
-        print("after add row")
         
         // Stop them selecting if there is no excerpt recording happening
         if self.currentExcerpt == nil {
