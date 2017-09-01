@@ -14,6 +14,7 @@ class StartPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.textField.layer.cornerRadius = 5
         // Do any additional setup after loading the view.
     }
     

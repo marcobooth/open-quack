@@ -12,12 +12,14 @@ struct AudioExcerpt {
     
     var startTime : TimeInterval
     var endTime : TimeInterval?
+    var timeDifference : TimeInterval
     var trimmedUrl : URL?
     var peopleSpeaking = [(name: String, startTime: TimeInterval, endTime: TimeInterval)]()
     var notes = [(note: String, time: TimeInterval)]()
     
-    init(startTime: TimeInterval) {
+    init(startTime: TimeInterval, timeDifference: TimeInterval) {
         self.startTime = startTime
+        self.timeDifference = timeDifference
     }
     
     func trimAudio(url: URL) {

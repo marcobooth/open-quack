@@ -25,6 +25,10 @@ class ViewController: UIViewController {
 
         self.setSessionRecord()
         self.recordWithPermission()
+        
+//        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.handleLongGesture(_:)))
+//        self.collectionView.addGestureRecognizer(longPressGesture)
+
     }
     
     @IBAction func stopEvent(_ sender: UIBarButtonItem) {
@@ -93,7 +97,7 @@ class ViewController: UIViewController {
         }
         
         if self.currentExcerpt == nil {
-            self.currentExcerpt = AudioExcerpt(startTime: currentTime)
+            self.currentExcerpt = AudioExcerpt(startTime: currentTime, timeDifference: 30.0)
             self.recordButton.setTitle("Stop Recording", for: .normal)
         } else {
             stopExcerpt()
@@ -184,6 +188,26 @@ class ViewController: UIViewController {
             print(error.localizedDescription)
         }
     }
+    
+    //    func handleLongGesture(_ gesture: UILongPressGestureRecognizer) {
+    //        print("im here", gesture.state.rawValue)
+    //        switch(gesture.state) {
+    //
+    //        case UIGestureRecognizerState.began:
+    //            guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else {
+    //                break
+    //            }
+    //            print("selectedIndex", selectedIndexPath.row)
+    //            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+    //        case UIGestureRecognizerState.changed:
+    //            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+    //        case UIGestureRecognizerState.ended:
+    //            collectionView.endInteractiveMovement()
+    //        default:
+    //            collectionView.cancelInteractiveMovement()
+    //        }
+    //    }
+
 }
 
 // MARK: AVAudioRecorderDelegate
@@ -305,6 +329,22 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate 
         self.currentPersonSpeaking = nil
 
     }
+    
+//    public func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+//        if (indexPath.row == self.collectionView.numberOfItems(inSection: 0) - 1) {
+//            return false
+//        }
+//        return true
+//    }
+//
+//    
+//    public func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+//        print("moving stuff around")
+//        // Don't let them move the add people, don't let them add anything to it's place
+//        let temp = self.people?.remove(at: sourceIndexPath.item)
+//        self.people?.insert(temp!, at: destinationIndexPath.item)
+//    }
+
 
 }
 

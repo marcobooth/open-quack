@@ -43,6 +43,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ccLogo" translatesAutoresizingMaskIntoConstraints="NO" id="tcU-Zi-EP3">
+                                <rect key="frame" x="47" y="174" width="300" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -67,6 +71,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YnE-rn-Quz">
+                                <rect key="frame" x="114" y="617" width="146" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Record"/>
+                                <connections>
+                                    <action selector="createExcerpt:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lsk-Y6-KVP"/>
+                                </connections>
+                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JIf-iM-Etd">
                                 <rect key="frame" x="8" y="72" width="359" height="537"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -109,14 +121,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="plus" translatesAutoresizingMaskIntoConstraints="NO" id="22b-hv-2UG">
-                                                    <rect key="frame" x="33" y="34" width="33" height="33"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus" translatesAutoresizingMaskIntoConstraints="NO" id="kcs-47-FKl">
+                                                    <rect key="frame" x="35" y="35" width="30" height="30"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="22b-hv-2UG" firstAttribute="centerX" secondItem="knI-WK-j85" secondAttribute="centerX" id="K6K-lG-seb"/>
-                                            <constraint firstItem="22b-hv-2UG" firstAttribute="centerY" secondItem="knI-WK-j85" secondAttribute="centerY" id="lIW-Dq-yGS"/>
+                                            <constraint firstItem="kcs-47-FKl" firstAttribute="centerY" secondItem="knI-WK-j85" secondAttribute="centerY" id="syl-Mr-0jY"/>
+                                            <constraint firstItem="kcs-47-FKl" firstAttribute="centerX" secondItem="knI-WK-j85" secondAttribute="centerX" id="vER-Lo-uNv"/>
                                         </constraints>
                                         <size key="customSize" width="100" height="100"/>
                                     </collectionViewCell>
@@ -126,13 +138,10 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="BZc-N5-pZZ"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YnE-rn-Quz">
-                                <rect key="frame" x="114" y="617" width="146" height="30"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M88-iS-yvT">
+                                <rect key="frame" x="294" y="617" width="65" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Record"/>
-                                <connections>
-                                    <action selector="createExcerpt:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lsk-Y6-KVP"/>
-                                </connections>
+                                <state key="normal" title="Add Note"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -143,7 +152,6 @@
                                 <action selector="stopEvent:" destination="BYZ-38-t0r" id="nUf-W9-PzF"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Edit" id="Oq0-Aa-3ZL"/>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="JIf-iM-Etd" id="hjY-y9-mlL"/>
@@ -176,6 +184,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ccLogo" width="941" height="168"/>
         <image name="plus" width="30" height="30"/>
     </resources>
 </document>
