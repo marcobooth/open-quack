@@ -15,7 +15,17 @@ class StartPageViewController: UIViewController {
         super.viewDidLoad()
 
         self.textField.layer.cornerRadius = 5
-        // Do any additional setup after loading the view.
+        
+        // TODO: Ask Teo if app memory should be cleared each time app loads, in case of errors, ensures that 
+        // the recording will be deleted. Will pile up in memory if this were to happen
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
     }
     
     @IBAction func unwindToRootViewController(segue: UIStoryboardSegue) {
@@ -23,12 +33,20 @@ class StartPageViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let name = textField.text else {
+        guard let name = textField.text, textField.text != "" else {
             print("I'm afraid we need a name")
+            self.showErrorMessage(title: "Error", message: "Please provide a name for the event")
             return
         }
         
         segue.destination.title = name
     }
+}
 
+extension UIViewController {
+    func showErrorMessage(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
 }

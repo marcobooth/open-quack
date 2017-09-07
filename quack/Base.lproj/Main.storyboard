@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,14 +22,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rYc-jY-658">
-                                <rect key="frame" x="170" y="380" width="34" height="30"/>
+                                <rect key="frame" x="170" y="324" width="34" height="30"/>
                                 <state key="normal" title="Start"/>
                                 <connections>
                                     <segue destination="BYZ-38-t0r" kind="show" id="G4D-cv-Ns1"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2kf-f5-ayx">
-                                <rect key="frame" x="62.5" y="342" width="250" height="30"/>
+                                <rect key="frame" x="62.5" y="286" width="250" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="X0D-5i-8oW"/>
                                 </constraints>
@@ -39,13 +38,13 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKu-qG-y0l">
-                                <rect key="frame" x="142" y="313" width="90" height="21"/>
+                                <rect key="frame" x="142" y="257" width="90" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ccLogo" translatesAutoresizingMaskIntoConstraints="NO" id="tcU-Zi-EP3">
-                                <rect key="frame" x="37.5" y="170" width="300" height="60"/>
+                                <rect key="frame" x="37.5" y="114" width="300" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="Rzt-ea-W9H"/>
                                     <constraint firstAttribute="width" constant="300" id="tzE-ht-mqX"/>
@@ -58,7 +57,7 @@
                             <constraint firstItem="2kf-f5-ayx" firstAttribute="centerX" secondItem="a6Y-IK-haH" secondAttribute="centerX" id="86E-TT-9uT"/>
                             <constraint firstItem="rYc-jY-658" firstAttribute="centerX" secondItem="a6Y-IK-haH" secondAttribute="centerX" id="Hdq-TM-TeP"/>
                             <constraint firstItem="bKu-qG-y0l" firstAttribute="top" secondItem="tcU-Zi-EP3" secondAttribute="bottom" constant="83" id="MrR-Mo-tNF"/>
-                            <constraint firstItem="tcU-Zi-EP3" firstAttribute="top" secondItem="6Zd-Xp-s1k" secondAttribute="bottom" constant="106" id="NKZ-yx-sEn"/>
+                            <constraint firstItem="tcU-Zi-EP3" firstAttribute="top" secondItem="6Zd-Xp-s1k" secondAttribute="bottom" constant="50" id="NKZ-yx-sEn"/>
                             <constraint firstItem="bKu-qG-y0l" firstAttribute="centerX" secondItem="a6Y-IK-haH" secondAttribute="centerX" id="RbY-r9-u9T"/>
                             <constraint firstItem="tcU-Zi-EP3" firstAttribute="centerX" secondItem="a6Y-IK-haH" secondAttribute="centerX" id="S1f-pC-kFm"/>
                             <constraint firstItem="rYc-jY-658" firstAttribute="top" secondItem="2kf-f5-ayx" secondAttribute="bottom" constant="8" id="fcZ-QO-dfd"/>
@@ -73,10 +72,10 @@
             </objects>
             <point key="canvasLocation" x="1359.2" y="-537.48125937031489"/>
         </scene>
-        <!--View Controller-->
+        <!--Recording View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="quack" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="RecordingViewController" customModule="quack" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -86,14 +85,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YnE-rn-Quz">
-                                <rect key="frame" x="162.5" y="617" width="49" height="30"/>
+                                <rect key="frame" x="163" y="72" width="49" height="30"/>
                                 <state key="normal" title="Record"/>
                                 <connections>
                                     <action selector="createExcerpt:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lsk-Y6-KVP"/>
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JIf-iM-Etd">
-                                <rect key="frame" x="8" y="72" width="359" height="537"/>
+                                <rect key="frame" x="8" y="139" width="359" height="470"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Q5O-cG-gs1">
@@ -113,6 +112,13 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus" translatesAutoresizingMaskIntoConstraints="NO" id="kcs-47-FKl">
                                                     <rect key="frame" x="60" y="60" width="30" height="30"/>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add a person" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cvE-ad-4ig">
+                                                    <rect key="frame" x="24" y="91" width="102" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </view>
                                         <constraints>
@@ -151,8 +157,9 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="BZc-N5-pZZ"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M88-iS-yvT">
-                                <rect key="frame" x="276" y="617" width="65" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M88-iS-yvT">
+                                <rect key="frame" x="302" y="72" width="65" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add Note"/>
                                 <connections>
                                     <action selector="addNote:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hgu-Pw-7Qu"/>
@@ -161,14 +168,12 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="M88-iS-yvT" secondAttribute="trailing" constant="18" id="7q5-eI-Qvd"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="YnE-rn-Quz" secondAttribute="bottom" constant="20" id="Dm9-2e-XaY"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="M88-iS-yvT" secondAttribute="bottom" constant="20" id="Pg6-Dz-b2L"/>
                             <constraint firstItem="YnE-rn-Quz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="j3Y-Zh-2Kj"/>
+                            <constraint firstItem="YnE-rn-Quz" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="zf8-DQ-hfq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="WQ4-zT-SHN">
-                        <barButtonItem key="leftBarButtonItem" title="Stop" id="Y6G-CZ-t1f">
+                        <barButtonItem key="leftBarButtonItem" title="End Event" id="Y6G-CZ-t1f">
                             <connections>
                                 <action selector="stopEvent:" destination="BYZ-38-t0r" id="nUf-W9-PzF"/>
                             </connections>

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  RecordingViewController.swift
 //  quack
 //
 //  Created by Marco Booth on 31/08/2017.
@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
+class RecordingViewController: UIViewController {
     var recorder : AVAudioRecorder?
     var recordingFileLocation : URL?
     var people : [String]? = ["Jerome", "Jeff"]
@@ -20,20 +20,22 @@ class ViewController: UIViewController {
     @IBOutlet weak var collectionView : UICollectionView!
     @IBOutlet weak var recordButton : UIButton!
     @IBOutlet weak var noteButton: UIButton!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.setSessionRecord()
         self.recordWithPermission()
         
         self.noteButton.isEnabled = false
-//        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.handleLongGesture(_:)))
-//        self.collectionView.addGestureRecognizer(longPressGesture)
-
     }
     
     @IBAction func stopEvent(_ sender: UIBarButtonItem) {
+        if self.currentExcerpt != nil {
+            self.showErrorMessage(title: "Error", message: "You cannot end an event while recording an excerpt")
+            return
+        }
+        
         let alert = UIAlertController(title: "End event", message: "Please confirm that you would like the event to end", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {action in
             print("cancel was tapped")
@@ -62,6 +64,11 @@ class ViewController: UIViewController {
         self.recorder = nil
         if sendToServer == true {
             // begin processing - maybe should disable view while in processing
+            print("sendToServer is true")
+            for excerpt in self.audioExcerpts {
+                print("doing an excerpt")
+                excerpt.trimAudio(url: recordingFileLocation!, name: self.title!)
+            }
         }
         
         print("audio excerpts", self.audioExcerpts)
@@ -205,29 +212,10 @@ class ViewController: UIViewController {
         self.present(alert, animated:true, completion:nil)
         return
     }
-    //    func handleLongGesture(_ gesture: UILongPressGestureRecognizer) {
-    //        print("im here", gesture.state.rawValue)
-    //        switch(gesture.state) {
-    //
-    //        case UIGestureRecognizerState.began:
-    //            guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else {
-    //                break
-    //            }
-    //            print("selectedIndex", selectedIndexPath.row)
-    //            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
-    //        case UIGestureRecognizerState.changed:
-    //            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
-    //        case UIGestureRecognizerState.ended:
-    //            collectionView.endInteractiveMovement()
-    //        default:
-    //            collectionView.cancelInteractiveMovement()
-    //        }
-    //    }
-
 }
 
 // MARK: AVAudioRecorderDelegate
-extension ViewController : AVAudioRecorderDelegate {
+extension RecordingViewController : AVAudioRecorderDelegate {
     
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder,
                                          successfully flag: Bool) {
@@ -242,7 +230,7 @@ extension ViewController : AVAudioRecorderDelegate {
     }
 }
 
-extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate {
+extension RecordingViewController : UICollectionViewDataSource, UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // The 1 is the extra cell used for adding additional people to the collection
         return 1 + (self.people?.count ?? 0)
@@ -281,7 +269,7 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate 
         
         return true
     }
-
+    
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if (indexPath.row == self.collectionView.numberOfItems(inSection: 0) - 1) {
             let alert = textFieldAlert(name: "Add a person", message: "Someone will be added to the list")
@@ -345,24 +333,9 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate 
         self.currentPersonSpeaking = nil
     }
     
-//    public func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-//        if (indexPath.row == self.collectionView.numberOfItems(inSection: 0) - 1) {
-//            return false
-//        }
-//        return true
-//    }
-//
-//    
-//    public func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-//        print("moving stuff around")
-//        // Don't let them move the add people, don't let them add anything to it's place
-//        let temp = self.people?.remove(at: sourceIndexPath.item)
-//        self.people?.insert(temp!, at: destinationIndexPath.item)
-//    }
-
 }
 
-extension ViewController : UICollectionViewDelegateFlowLayout {
+extension RecordingViewController : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let height = self.view.frame.size.height
@@ -372,14 +345,14 @@ extension ViewController : UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension ViewController {
+extension RecordingViewController {
     func textFieldAlert(name: String, message: String) -> UIAlertController {
         let alert = UIAlertController(title: name, message: message, preferredStyle: .alert)
         alert.addTextField(configurationHandler: nil)
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {action in
             print("cancel was tapped")
         }))
-
+        
         return alert
     }
 }
