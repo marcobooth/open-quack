@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class StartPageViewController: UIViewController {
     @IBOutlet weak var textField: UITextField!
@@ -36,6 +37,11 @@ class StartPageViewController: UIViewController {
         guard let name = textField.text, textField.text != "" else {
             print("I'm afraid we need a name")
             self.showErrorMessage(title: "Error", message: "Please provide a name for the event")
+            return
+        }
+        
+        if AVAudioSession.sharedInstance().recordPermission() == .denied {
+            self.showErrorMessage(title: "Permissions error", message: "This app does not have permission to record, please change this in Settings -> Privacy")
             return
         }
         

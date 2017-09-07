@@ -88,9 +88,11 @@ class RecordingViewController: UIViewController {
                     self.recorder?.record()
                 }
             } else {
-                // TODO: maybe leave a message saying they can only change this in Settings
                 print("Permission to record not granted")
-                self.stopRecording(sendToServer: false)
+                DispatchQueue.main.async {
+                    self.stopRecording(sendToServer: false)
+                    return
+                }
             }
         }
         

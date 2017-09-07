@@ -84,9 +84,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YnE-rn-Quz">
-                                <rect key="frame" x="163" y="72" width="49" height="30"/>
-                                <state key="normal" title="Record"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YnE-rn-Quz">
+                                <rect key="frame" x="170" y="70" width="35" height="35"/>
+                                <state key="normal" title="Record" image="record"/>
                                 <connections>
                                     <action selector="createExcerpt:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lsk-Y6-KVP"/>
                                 </connections>
@@ -165,6 +165,18 @@
                                     <action selector="addNote:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hgu-Pw-7Qu"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Currently listening but not recording" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rer-WK-wFA">
+                                <rect key="frame" x="47" y="617" width="276" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xip-Y4-9Pf">
+                                <rect key="frame" x="143" y="107" width="88" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="-30 seconds"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -213,5 +225,6 @@
     <resources>
         <image name="ccLogo" width="941" height="168"/>
         <image name="plus" width="30" height="30"/>
+        <image name="record" width="40" height="40"/>
     </resources>
 </document>
