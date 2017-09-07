@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var collectionView : UICollectionView!
     @IBOutlet weak var recordButton : UIButton!
+    @IBOutlet weak var noteButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,7 @@ class ViewController: UIViewController {
         self.setSessionRecord()
         self.recordWithPermission()
         
+        self.noteButton.isEnabled = false
 //        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.handleLongGesture(_:)))
 //        self.collectionView.addGestureRecognizer(longPressGesture)
 
@@ -97,6 +99,7 @@ class ViewController: UIViewController {
         }
         
         if self.currentExcerpt == nil {
+            self.noteButton.isEnabled = true
             self.currentExcerpt = AudioExcerpt(startTime: currentTime, timeDifference: 30.0)
             self.recordButton.setTitle("Stop Recording", for: .normal)
         } else {
@@ -109,6 +112,8 @@ class ViewController: UIViewController {
             print("no recorder, no time")
             return
         }
+        
+        self.noteButton.isEnabled = false
         
         if self.currentPersonSpeaking != nil {
             self.deselectRow(indexPath: nil)
@@ -189,6 +194,17 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func addNote(_ sender: UIButton) {
+        let alert = textFieldAlert(name: "Add a note", message: "A message will be attached with this recording")
+        alert.addAction(UIAlertAction(title: "Add", style: .default, handler: {action in
+            guard let note = alert.textFields?[0].text, let currentTime = self.recorder?.currentTime else {
+                return
+            }
+            self.currentExcerpt?.notes.append((note: note, time: currentTime))
+        }))
+        self.present(alert, animated:true, completion:nil)
+        return
+    }
     //    func handleLongGesture(_ gesture: UILongPressGestureRecognizer) {
     //        print("im here", gesture.state.rawValue)
     //        switch(gesture.state) {
@@ -327,7 +343,6 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate 
         self.currentExcerpt?.peopleSpeaking.append(self.currentPersonSpeaking! as! (name: String, startTime: TimeInterval, endTime: TimeInterval))
         
         self.currentPersonSpeaking = nil
-
     }
     
 //    public func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
@@ -345,7 +360,16 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate 
 //        self.people?.insert(temp!, at: destinationIndexPath.item)
 //    }
 
+}
 
+extension ViewController : UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let height = self.view.frame.size.height
+        let width = self.view.frame.size.width
+        
+        return CGSize(width: width*0.4, height: height*0.2)
+    }
 }
 
 extension ViewController {
