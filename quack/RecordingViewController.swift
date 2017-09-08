@@ -16,6 +16,7 @@ class RecordingViewController: UIViewController {
     var audioExcerpts = [AudioExcerpt]()
     var currentExcerpt : AudioExcerpt?
     var currentPersonSpeaking : (name: String, startTime: TimeInterval, endTime: TimeInterval?)?
+    var lightBorder : Bool = false
     
     @IBOutlet weak var collectionView : UICollectionView!
     @IBOutlet weak var recordButton : UIButton!
@@ -110,8 +111,13 @@ class RecordingViewController: UIViewController {
         if self.currentExcerpt == nil {
             self.noteButton.isEnabled = true
             self.currentExcerpt = AudioExcerpt(startTime: currentTime, timeDifference: 30.0)
+            self.recordButton.setImage(#imageLiteral(resourceName: "square"), for: .normal)
             self.recordButton.setTitle("Stop Recording", for: .normal)
+            self.lightBorder = true
+            self.collectionView.reloadData()
         } else {
+            self.lightBorder = false
+            self.collectionView.reloadData()
             stopExcerpt()
         }
     }
@@ -131,9 +137,8 @@ class RecordingViewController: UIViewController {
         self.currentExcerpt?.endTime = currentTime
         // Feel like this ! might be ok, maybe should remove it though
         self.audioExcerpts.append(self.currentExcerpt!)
-        print("currentExcerpt", self.currentExcerpt)
         self.currentExcerpt = nil
-        self.recordButton.setTitle("Record", for: .normal)
+        self.recordButton.setImage(#imageLiteral(resourceName: "record"), for: .normal)
     }
     
     func setupRecorder() {
@@ -142,25 +147,23 @@ class RecordingViewController: UIViewController {
             currentFilename = title + ".wav"
         } else {
             print("error: unNamed event, we gots a problem")
-            self.stopRecording(sendToServer: false)
+            self.stopRecordingAlert(message: "Please provide a name for this event.")
             return
         }
         
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         self.recordingFileLocation = documentsDirectory.appendingPathComponent(currentFilename)
-        print("writing to soundfile url: '\(recordingFileLocation!)'")
         
         guard let recordingLocation = self.recordingFileLocation else {
-            self.stopRecording(sendToServer: false)
             return
         }
-        
+        print("writing to soundfile url: '\(recordingLocation)'")
+
         // Add this as a pull request from where I got the code,
         // https://stackoverflow.com/questions/9303875/fileexistsatpath-returning-no-for-files-that-exist
         if FileManager.default.fileExists(atPath: recordingLocation.path) {
             // TEST: same file name
-            print("soundfile \(recordingFileLocation?.absoluteString ?? "") exists")
-            self.stopRecording(sendToServer: false)
+            self.stopRecordingAlert(message: "Please provide a unique name for this event. The name you have provided is already in use")
             return
         }
         
@@ -245,6 +248,13 @@ extension RecordingViewController : UICollectionViewDataSource, UICollectionView
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "person", for: indexPath) as! PersonCollectionViewCell
         cell.name.text = people?[indexPath.row]
+        
+        cell.layer.borderColor = UIColor.gray.cgColor
+        if self.lightBorder == true {
+            cell.layer.borderWidth = 0.5
+        } else {
+            cell.layer.borderWidth = 0.0
+        }
         return cell
     }
     
@@ -290,7 +300,6 @@ extension RecordingViewController : UICollectionViewDataSource, UICollectionView
         
         let cell = self.collectionView.cellForItem(at: indexPath)
         cell?.layer.borderWidth = 2.0
-        cell?.layer.borderColor = UIColor.gray.cgColor
         guard let name = self.people?[indexPath.row], let startTime = self.recorder?.currentTime else {
             // Double check this
             self.currentPersonSpeaking = nil
@@ -319,7 +328,8 @@ extension RecordingViewController : UICollectionViewDataSource, UICollectionView
                 cell = self.collectionView.cellForItem(at: indexPath)
             }
         }
-        cell?.layer.borderWidth = 0.0
+        
+        cell?.layer.borderWidth = 0.5
         
         if self.currentPersonSpeaking == nil {
             return
@@ -343,7 +353,7 @@ extension RecordingViewController : UICollectionViewDelegateFlowLayout {
         let height = self.view.frame.size.height
         let width = self.view.frame.size.width
         
-        return CGSize(width: width*0.4, height: height*0.2)
+        return CGSize(width: width*0.45, height: height*0.2)
     }
 }
 
@@ -356,5 +366,13 @@ extension RecordingViewController {
         }))
         
         return alert
+    }
+    
+    func stopRecordingAlert(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: {action in
+            self.stopRecording(sendToServer: false)
+        }))
+        self.present(alert, animated:true, completion:nil)
     }
 }

@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -84,16 +85,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YnE-rn-Quz">
-                                <rect key="frame" x="170" y="70" width="35" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YnE-rn-Quz">
+                                <rect key="frame" x="166.5" y="72" width="42" height="52"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="42" id="77s-be-w5i"/>
+                                    <constraint firstAttribute="height" constant="52" id="QOq-vK-INj"/>
+                                </constraints>
                                 <state key="normal" title="Record" image="record"/>
                                 <connections>
                                     <action selector="createExcerpt:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lsk-Y6-KVP"/>
                                 </connections>
                             </button>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JIf-iM-Etd">
-                                <rect key="frame" x="8" y="139" width="359" height="470"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JIf-iM-Etd">
+                                <rect key="frame" x="8" y="139" width="359" height="479"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Q5O-cG-gs1">
                                     <size key="itemSize" width="50" height="50"/>
@@ -157,31 +161,33 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="BZc-N5-pZZ"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M88-iS-yvT">
-                                <rect key="frame" x="302" y="72" width="65" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M88-iS-yvT">
+                                <rect key="frame" x="302" y="83" width="65" height="30"/>
                                 <state key="normal" title="Add Note"/>
                                 <connections>
                                     <action selector="addNote:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hgu-Pw-7Qu"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Currently listening but not recording" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rer-WK-wFA">
-                                <rect key="frame" x="47" y="617" width="276" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currently listening" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rer-WK-wFA">
+                                <rect key="frame" x="16" y="638" width="343" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xip-Y4-9Pf">
-                                <rect key="frame" x="143" y="107" width="88" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="-30 seconds"/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="YnE-rn-Quz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="j3Y-Zh-2Kj"/>
-                            <constraint firstItem="YnE-rn-Quz" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="zf8-DQ-hfq"/>
+                            <constraint firstItem="YnE-rn-Quz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1XD-qQ-RIE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="JIf-iM-Etd" secondAttribute="trailing" constant="-8" id="4px-L3-KaT"/>
+                            <constraint firstItem="YnE-rn-Quz" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="JhA-qH-IHV"/>
+                            <constraint firstItem="M88-iS-yvT" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="19" id="MCq-Xp-nDw"/>
+                            <constraint firstItem="JIf-iM-Etd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-8" id="Mai-qk-ibe"/>
+                            <constraint firstItem="JIf-iM-Etd" firstAttribute="top" secondItem="YnE-rn-Quz" secondAttribute="bottom" constant="15" id="TTU-sq-J9t"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="M88-iS-yvT" secondAttribute="trailing" constant="-8" id="UnP-dr-dKJ"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Rer-WK-wFA" secondAttribute="bottom" constant="8" id="Zgq-Vt-Evq"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="Rer-WK-wFA" secondAttribute="leading" id="hec-nW-Jif"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Rer-WK-wFA" secondAttribute="trailing" id="hhB-JM-Pse"/>
+                            <constraint firstItem="Rer-WK-wFA" firstAttribute="top" secondItem="JIf-iM-Etd" secondAttribute="bottom" constant="20" id="upo-3k-PUs"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="WQ4-zT-SHN">
