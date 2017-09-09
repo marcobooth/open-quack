@@ -9,7 +9,7 @@
 import Foundation
 import AVFoundation
 
-struct AudioExcerpt {
+class AudioExcerpt {
     
     var startTime : TimeInterval
     var endTime : TimeInterval?
@@ -23,7 +23,10 @@ struct AudioExcerpt {
         self.timeDifference = timeDifference
     }
     
-    func trimAudio(url: URL, name: String) {
+    func trimAudio(url: URL, name: String, reference: ProcessAudioViewController) {
+        print("url", url)
+        print("name", name)
+        
         let input = AVAsset(url: url)
         
         let exportSession = AVAssetExportSession(asset: input, presetName: AVAssetExportPresetPassthrough)
@@ -52,17 +55,17 @@ struct AudioExcerpt {
         // https://stackoverflow.com/questions/29707622/swift-compiler-error-expression-too-complex-on-a-string-concatenation
         let trimmedFilname = "\(name)-\(startTimeDescription)-\(endTimeDescription).wav"
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let trimmedSoundFileURL = documentsDirectory.appendingPathComponent(trimmedFilname)
+        self.trimmedUrl = documentsDirectory.appendingPathComponent(trimmedFilname)
         // TODO: check if filename is already in use. Tried this but run into race condition, creates
         // file before it started export. Not sure if this is a problem though as using start and
         // end time
-        exportSession?.outputURL = trimmedSoundFileURL
+        exportSession?.outputURL = self.trimmedUrl
         
         exportSession?.exportAsynchronously(completionHandler: {
             if AVAssetExportSessionStatus.completed == exportSession?.status {
-                print("wooooo")
+                reference.trimmedExcerpt(success: true)
             } else {
-                print(exportSession?.error ?? "export session error")
+                reference.trimmedExcerpt(success: false)
             }
         })
     }

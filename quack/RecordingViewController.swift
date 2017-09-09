@@ -66,15 +66,26 @@ class RecordingViewController: UIViewController {
         if sendToServer == true {
             // begin processing - maybe should disable view while in processing
             print("sendToServer is true")
-            for excerpt in self.audioExcerpts {
-                print("doing an excerpt")
-                excerpt.trimAudio(url: recordingFileLocation!, name: self.title!)
+            if let processingVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "progress") as? ProcessAudioViewController {
+                processingVC.modalPresentationStyle = .overCurrentContext
+                processingVC.audioExcerpts = self.audioExcerpts
+                processingVC.filename = self.title!
+                processingVC.delegate = self
+                processingVC.mainAudioFileLocation = self.recordingFileLocation
+                self.present(processingVC, animated: true, completion: {
+//                    print("in the completion")
+                })
             }
+            return
         }
         
-        print("audio excerpts", self.audioExcerpts)
-        
-        // Should delete all audio excerpts and put currentExcerpt at nil
+        // Maybe should delete main audio file
+        reset()
+    }
+    
+    func reset() {
+        // put currentExcerpt at nil
+        // disable vc touch
         self.performSegue(withIdentifier: "unwindToStart", sender: nil)
     }
     

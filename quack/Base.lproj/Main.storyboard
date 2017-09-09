@@ -73,6 +73,49 @@
             </objects>
             <point key="canvasLocation" x="1359.2" y="-537.48125937031489"/>
         </scene>
+        <!--Process Audio View Controller-->
+        <scene sceneID="bPe-pP-ojo">
+            <objects>
+                <viewController storyboardIdentifier="progress" id="t4N-cI-7yt" customClass="ProcessAudioViewController" customModule="quack" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4V2-0d-lOT"/>
+                        <viewControllerLayoutGuide type="bottom" id="IcG-0s-3Tc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BwC-21-QRp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mG6-VR-ozP">
+                                <rect key="frame" x="112" y="332" width="150" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="yTa-Zv-JhO"/>
+                                </constraints>
+                            </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Processing" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QZl-7v-2aC">
+                                <rect key="frame" x="16" y="358" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mG6-VR-ozP" firstAttribute="centerY" secondItem="BwC-21-QRp" secondAttribute="centerY" id="CTP-ex-cTI"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="QZl-7v-2aC" secondAttribute="leading" id="G0z-J5-MJs"/>
+                            <constraint firstItem="QZl-7v-2aC" firstAttribute="top" secondItem="mG6-VR-ozP" secondAttribute="bottom" constant="24" id="OIO-Du-HOq"/>
+                            <constraint firstItem="mG6-VR-ozP" firstAttribute="centerX" secondItem="BwC-21-QRp" secondAttribute="centerX" id="vmh-3u-sqT"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="QZl-7v-2aC" secondAttribute="trailing" id="xkZ-TN-wRv"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="label" destination="QZl-7v-2aC" id="drx-ea-nzz"/>
+                        <outlet property="progressView" destination="mG6-VR-ozP" id="xlm-02-iMR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5PS-6q-XLf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1386.4000000000001" y="217.24137931034485"/>
+        </scene>
         <!--Recording View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>

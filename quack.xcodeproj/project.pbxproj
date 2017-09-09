@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AB218F801F616BDA0050F71B /* RecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB218F7F1F616BDA0050F71B /* RecordingViewController.swift */; };
+		AB218F871F632DFB0050F71B /* ProcessAudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB218F861F632DFB0050F71B /* ProcessAudioViewController.swift */; };
 		AB8E56221F57FE4500C50F1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E56211F57FE4500C50F1E /* AppDelegate.swift */; };
 		AB8E56271F57FE4500C50F1E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB8E56251F57FE4500C50F1E /* Main.storyboard */; };
 		AB8E56291F57FE4500C50F1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB8E56281F57FE4500C50F1E /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		AB218F7F1F616BDA0050F71B /* RecordingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingViewController.swift; sourceTree = "<group>"; };
+		AB218F861F632DFB0050F71B /* ProcessAudioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessAudioViewController.swift; sourceTree = "<group>"; };
 		AB8E561E1F57FE4500C50F1E /* quack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = quack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB8E56211F57FE4500C50F1E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AB8E56261F57FE4500C50F1E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -44,8 +46,9 @@
 		AB218F811F616C0E0050F71B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				AB8E56371F5985FE00C50F1E /* StartPageViewController.swift */,
+				AB218F861F632DFB0050F71B /* ProcessAudioViewController.swift */,
 				AB218F7F1F616BDA0050F71B /* RecordingViewController.swift */,
+				AB8E56371F5985FE00C50F1E /* StartPageViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB8E56381F5985FE00C50F1E /* StartPageViewController.swift in Sources */,
+				AB218F871F632DFB0050F71B /* ProcessAudioViewController.swift in Sources */,
 				AB8E56341F5853A700C50F1E /* PersonCollectionViewCell.swift in Sources */,
 				AB8E56361F585D2A00C50F1E /* AudioExcerpt.swift in Sources */,
 				AB218F801F616BDA0050F71B /* RecordingViewController.swift in Sources */,
