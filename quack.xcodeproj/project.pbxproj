@@ -71,11 +71,19 @@
 			name = Storyboards;
 			sourceTree = "<group>";
 		};
+		AB218F881F6427AC0050F71B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AB8E56151F57FE4400C50F1E = {
 			isa = PBXGroup;
 			children = (
 				AB8E56201F57FE4500C50F1E /* quack */,
 				AB8E561F1F57FE4500C50F1E /* Products */,
+				AB218F881F6427AC0050F71B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -132,11 +140,14 @@
 				TargetAttributes = {
 					AB8E561D1F57FE4500C50F1E = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 4T3ZCF4H7L;
+						DevelopmentTeam = 78F58JA687;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
+								enabled = 0;
 							};
 						};
 					};
@@ -308,10 +319,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4T3ZCF4H7L;
+				DEVELOPMENT_TEAM = 78F58JA687;
 				INFOPLIST_FILE = quack/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = marcobooth.com.quack;
+				PRODUCT_BUNDLE_IDENTIFIER = com.marcobooth.quack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -321,10 +333,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4T3ZCF4H7L;
+				DEVELOPMENT_TEAM = 78F58JA687;
 				INFOPLIST_FILE = quack/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = marcobooth.com.quack;
+				PRODUCT_BUNDLE_IDENTIFIER = com.marcobooth.quack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
