@@ -16,9 +16,6 @@ class StartPageViewController: UIViewController {
         super.viewDidLoad()
 
         self.textField.layer.cornerRadius = 5
-        
-        // TODO: Ask Teo if app memory should be cleared each time app loads, in case of errors, ensures that 
-        // the recording will be deleted. Will pile up in memory if this were to happen
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,16 +32,14 @@ class StartPageViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let name = textField.text, textField.text != "" else {
-            print("I'm afraid we need a name")
             self.showErrorMessage(title: "Error", message: "Please provide a name for the event")
             return
         }
         
         if AVAudioSession.sharedInstance().recordPermission() == .denied {
-            self.showErrorMessage(title: "Permissions error", message: "This app does not have permission to record, please change this in Settings -> Privacy")
+            self.showErrorMessage(title: "Permissions error", message: "This app does not have permission to record, please change this in Settings, under the Privacy option")
             return
         }
-        
         segue.destination.title = name
     }
     

@@ -12,7 +12,7 @@ import AVFoundation
 class RecordingViewController: UIViewController {
     var recorder : AVAudioRecorder?
     var recordingFileLocation : URL?
-    var people : [String]? = ["Jerome", "Jeff"]
+    var people : [String]? = []
     var audioExcerpts = [AudioExcerpt]()
     var currentExcerpt : AudioExcerpt?
     var currentPersonSpeaking : (name: String, startTime: TimeInterval, endTime: TimeInterval?)?
@@ -25,7 +25,7 @@ class RecordingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setSessionRecord()
+        AudioManager.sharedInstance.setSessionRecord()
         self.recordWithPermission()
         
         self.noteButton.isEnabled = false
@@ -38,9 +38,7 @@ class RecordingViewController: UIViewController {
         }
         
         let alert = UIAlertController(title: "End event", message: "Please confirm that you would like the event to end", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {action in
-            print("cancel was tapped")
-        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: {action in
             self.stopRecording(sendToServer: true)
         }))
@@ -54,38 +52,30 @@ class RecordingViewController: UIViewController {
         }
         
         self.recorder?.stop()
-        let session = AVAudioSession.sharedInstance()
-        do {
-            try session.setActive(false)
-        } catch {
-            print("could not make session inactive")
-            print(error.localizedDescription)
-        }
-        
+        AudioManager.sharedInstance.unsetSessionRecord()
         self.recorder = nil
+        
         if sendToServer == true {
-            // begin processing - maybe should disable view while in processing
-            print("sendToServer is true")
-            if let processingVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "progress") as? ProcessAudioViewController {
-                processingVC.modalPresentationStyle = .overCurrentContext
-                processingVC.audioExcerpts = self.audioExcerpts
-                processingVC.filename = self.title!
-                processingVC.delegate = self
-                processingVC.mainAudioFileLocation = self.recordingFileLocation
-                self.present(processingVC, animated: true, completion: {
-//                    print("in the completion")
-                })
+            // begin processing - maybe should disable view while in processing..?
+            guard let title = self.title, let processingVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "progress") as? ProcessAudioViewController else {
+                reset()
+                return
             }
+            
+            processingVC.modalPresentationStyle = .overCurrentContext
+            processingVC.audioExcerpts = self.audioExcerpts
+            processingVC.filename = title
+            processingVC.delegate = self
+            processingVC.mainAudioFileLocation = self.recordingFileLocation
+            self.present(processingVC, animated: true, completion: nil)
             return
         }
         
-        // Maybe should delete main audio file
         reset()
     }
     
     func reset() {
-        // put currentExcerpt at nil
-        // disable vc touch
+        AudioManager.sharedInstance.deleteAudioFile(url: self.recordingFileLocation)
         self.performSegue(withIdentifier: "unwindToStart", sender: nil)
     }
     
@@ -93,14 +83,11 @@ class RecordingViewController: UIViewController {
         AVAudioSession.sharedInstance().requestRecordPermission() {
             [unowned self] granted in
             if granted {
-                
                 DispatchQueue.main.async {
-                    print("Permission to record granted")
                     self.setupRecorder()
                     self.recorder?.record()
                 }
             } else {
-                print("Permission to record not granted")
                 DispatchQueue.main.async {
                     self.stopRecording(sendToServer: false)
                     return
@@ -109,7 +96,7 @@ class RecordingViewController: UIViewController {
         }
         
         if AVAudioSession.sharedInstance().recordPermission() == .denied {
-            print("permission denied")
+            self.stopRecording(sendToServer: false)
         }
     }
     
@@ -134,7 +121,7 @@ class RecordingViewController: UIViewController {
     }
     
     func stopExcerpt() {
-        guard let currentTime = self.recorder?.currentTime else {
+        guard let currentTime = self.recorder?.currentTime, let currentExcerpt = self.currentExcerpt else {
             print("no recorder, no time")
             return
         }
@@ -142,38 +129,33 @@ class RecordingViewController: UIViewController {
         self.noteButton.isEnabled = false
         
         if self.currentPersonSpeaking != nil {
-            self.deselectRow(indexPath: nil)
+            self.deselectedRow(indexPath: nil)
         }
         
-        self.currentExcerpt?.endTime = currentTime
-        // Feel like this ! might be ok, maybe should remove it though
-        self.audioExcerpts.append(self.currentExcerpt!)
+        currentExcerpt.endTime = currentTime
+        self.audioExcerpts.append(currentExcerpt)
         self.currentExcerpt = nil
         self.recordButton.setImage(#imageLiteral(resourceName: "record"), for: .normal)
     }
     
     func setupRecorder() {
-        let currentFilename : String
-        if let title = self.title {
-            currentFilename = title + ".wav"
-        } else {
-            print("error: unNamed event, we gots a problem")
+        guard let title = self.title else {
             self.stopRecordingAlert(message: "Please provide a name for this event.")
             return
         }
+        let currentFilename = title + ".wav"
         
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         self.recordingFileLocation = documentsDirectory.appendingPathComponent(currentFilename)
         
         guard let recordingLocation = self.recordingFileLocation else {
+            self.stopRecordingAlert(message: "Could not set up location to save file")
             return
         }
-        print("writing to soundfile url: '\(recordingLocation)'")
+//        print("writing to soundfile url: '\(recordingLocation)'")
 
-        // Add this as a pull request from where I got the code,
         // https://stackoverflow.com/questions/9303875/fileexistsatpath-returning-no-for-files-that-exist
         if FileManager.default.fileExists(atPath: recordingLocation.path) {
-            // TEST: same file name
             self.stopRecordingAlert(message: "Please provide a unique name for this event. The name you have provided is already in use")
             return
         }
@@ -192,29 +174,11 @@ class RecordingViewController: UIViewController {
             self.recorder?.delegate = self
             self.recorder?.prepareToRecord() // creates/overwrites the file at soundFileURL
         } catch {
-            recorder = nil
-            self.stopRecording(sendToServer: false)
+            self.recorder = nil
+            self.stopRecordingAlert(message: "Could not start recording. Please try to start the event again")
             print(error.localizedDescription)
         }
         
-    }
-    
-    func setSessionRecord() {
-        let session = AVAudioSession.sharedInstance()
-        
-        do {
-            try session.setCategory(AVAudioSessionCategoryRecord)
-        } catch {
-            print("could not set session category")
-            print(error.localizedDescription)
-        }
-        
-        do {
-            try session.setActive(true)
-        } catch {
-            print("could not make session active")
-            print(error.localizedDescription)
-        }
     }
     
     @IBAction func addNote(_ sender: UIButton) {
@@ -227,22 +191,6 @@ class RecordingViewController: UIViewController {
         }))
         self.present(alert, animated:true, completion:nil)
         return
-    }
-}
-
-// MARK: AVAudioRecorderDelegate
-extension RecordingViewController : AVAudioRecorderDelegate {
-    
-    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder,
-                                         successfully flag: Bool) {
-        print("audioRecorderDidFinishRecording")
-    }
-    
-    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder,
-                                          error: Error?) {
-        if let e = error {
-            print("\(e.localizedDescription)")
-        }
     }
 }
 
@@ -279,14 +227,13 @@ extension RecordingViewController : UICollectionViewDataSource, UICollectionView
         
         // Stop them selecting if there is no excerpt recording happening
         if self.currentExcerpt == nil {
-            print("there is nothing being recorded")
             return false
         }
         
         let cell = self.collectionView.cellForItem(at: indexPath)
         if cell?.isSelected == true {
             self.collectionView.deselectItem(at: indexPath, animated: false)
-            deselectRow(indexPath: indexPath)
+            deselectedRow(indexPath: indexPath)
             return false
         }
         
@@ -307,12 +254,9 @@ extension RecordingViewController : UICollectionViewDataSource, UICollectionView
             return
         }
         
-        // TEST: while someone is speaking, add another person. Shouldn't be affected because using an array
-        
         let cell = self.collectionView.cellForItem(at: indexPath)
         cell?.layer.borderWidth = 2.0
         guard let name = self.people?[indexPath.row], let startTime = self.recorder?.currentTime else {
-            // Double check this
             self.currentPersonSpeaking = nil
             return
         }
@@ -325,19 +269,17 @@ extension RecordingViewController : UICollectionViewDataSource, UICollectionView
             return
         }
         
-        deselectRow(indexPath: indexPath)
-        
+        deselectedRow(indexPath: indexPath)
     }
     
-    func deselectRow(indexPath: IndexPath?) {
-        // Probably have something that calls endTime either from here if already selected OR directly from the select method, which gets called if you select a different row
+    func deselectedRow(indexPath: IndexPath?) {
         var cell : UICollectionViewCell?
         if let indexPath = indexPath {
             cell = self.collectionView.cellForItem(at: indexPath)
+        } else if self.collectionView.indexPathsForSelectedItems?.count != 0, let indexPath = self.collectionView.indexPathsForSelectedItems?[0] {
+            cell = self.collectionView.cellForItem(at: indexPath)
         } else {
-            if self.collectionView.indexPathsForSelectedItems?.count != 0, let indexPath = self.collectionView.indexPathsForSelectedItems?[0] {
-                cell = self.collectionView.cellForItem(at: indexPath)
-            }
+            return
         }
         
         cell?.layer.borderWidth = 0.5
@@ -346,12 +288,11 @@ extension RecordingViewController : UICollectionViewDataSource, UICollectionView
             return
         }
         
-        guard let endTime = self.recorder?.currentTime else {
+        guard let endTime = self.recorder?.currentTime, let currentPersonSpeaking = self.currentPersonSpeaking else {
             return
         }
-        self.currentPersonSpeaking?.endTime = endTime as TimeInterval
-        // ! aaahh
-        self.currentExcerpt?.peopleSpeaking.append(self.currentPersonSpeaking! as! (name: String, startTime: TimeInterval, endTime: TimeInterval))
+        
+        self.currentExcerpt?.peopleSpeaking.append((name: currentPersonSpeaking.name, startTime: currentPersonSpeaking.startTime, endTime: endTime as TimeInterval))
         
         self.currentPersonSpeaking = nil
     }
@@ -368,22 +309,29 @@ extension RecordingViewController : UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension RecordingViewController {
-    func textFieldAlert(name: String, message: String) -> UIAlertController {
-        let alert = UIAlertController(title: name, message: message, preferredStyle: .alert)
-        alert.addTextField(configurationHandler: nil)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {action in
-            print("cancel was tapped")
-        }))
-        
-        return alert
-    }
-    
+extension RecordingViewController {    
     func stopRecordingAlert(message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: {action in
             self.stopRecording(sendToServer: false)
         }))
         self.present(alert, animated:true, completion:nil)
+    }
+}
+
+
+// MARK: AVAudioRecorderDelegate
+extension RecordingViewController : AVAudioRecorderDelegate {
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder,
+                                         successfully flag: Bool) {
+        print("audioRecorderDidFinishRecording")
+    }
+    
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder,
+                                          error: Error?) {
+        if let e = error {
+            print("\(e.localizedDescription)")
+        }
     }
 }

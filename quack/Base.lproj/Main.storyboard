@@ -159,9 +159,8 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus" translatesAutoresizingMaskIntoConstraints="NO" id="kcs-47-FKl">
                                                     <rect key="frame" x="60" y="60" width="30" height="30"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add a person" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cvE-ad-4ig">
-                                                    <rect key="frame" x="24" y="91" width="102" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a person" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cvE-ad-4ig">
+                                                    <rect key="frame" x="24" y="101" width="102" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -169,6 +168,8 @@
                                             </subviews>
                                         </view>
                                         <constraints>
+                                            <constraint firstItem="cvE-ad-4ig" firstAttribute="centerX" secondItem="kcs-47-FKl" secondAttribute="centerX" id="KHM-xQ-2QO"/>
+                                            <constraint firstItem="cvE-ad-4ig" firstAttribute="top" secondItem="kcs-47-FKl" secondAttribute="bottom" constant="11" id="S8t-G3-Rgj"/>
                                             <constraint firstItem="kcs-47-FKl" firstAttribute="centerY" secondItem="knI-WK-j85" secondAttribute="centerY" id="syl-Mr-0jY"/>
                                             <constraint firstItem="kcs-47-FKl" firstAttribute="centerX" secondItem="knI-WK-j85" secondAttribute="centerX" id="vER-Lo-uNv"/>
                                         </constraints>

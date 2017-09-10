@@ -24,9 +24,6 @@ class AudioExcerpt {
     }
     
     func trimAudio(url: URL, name: String, reference: ProcessAudioViewController) {
-        print("url", url)
-        print("name", name)
-        
         let input = AVAsset(url: url)
         
         let exportSession = AVAssetExportSession(asset: input, presetName: AVAssetExportPresetPassthrough)
