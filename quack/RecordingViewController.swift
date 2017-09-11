@@ -319,7 +319,6 @@ extension RecordingViewController {
 }
 
 extension RecordingViewController : AVAudioRecorderDelegate {
-    // TODO: unclear if we need this function
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         print("audioRecorderDidFinishRecording")
     }
