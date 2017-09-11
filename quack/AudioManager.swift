@@ -10,9 +10,7 @@ import Foundation
 import AVFoundation
 
 struct AudioManager {
-    static let sharedInstance = AudioManager()
-    
-    func setSessionRecord() {
+    static func setSessionRecord() {
         let session = AVAudioSession.sharedInstance()
         
         do {
@@ -30,7 +28,7 @@ struct AudioManager {
         }
     }
     
-    func unsetSessionRecord() {
+    static func unsetSessionRecord() {
         let session = AVAudioSession.sharedInstance()
         do {
             try session.setActive(false)
@@ -40,7 +38,7 @@ struct AudioManager {
         }
     }
     
-    func deleteAudioFile(url : URL?) {
+    static func deleteAudioFile(url : URL?) {
         guard let fileToDelete = url else {
             print("file was not deleted")
             return

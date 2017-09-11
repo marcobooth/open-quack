@@ -10,7 +10,6 @@
 		AB218F801F616BDA0050F71B /* RecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB218F7F1F616BDA0050F71B /* RecordingViewController.swift */; };
 		AB218F871F632DFB0050F71B /* ProcessAudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB218F861F632DFB0050F71B /* ProcessAudioViewController.swift */; };
 		AB218F8C1F656CB50050F71B /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB218F8B1F656CB50050F71B /* AudioManager.swift */; };
-		AB218F8E1F656CC70050F71B /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB218F8D1F656CC70050F71B /* Alert.swift */; };
 		AB218F901F6586E60050F71B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB218F8F1F6586E60050F71B /* AVFoundation.framework */; };
 		AB8E56221F57FE4500C50F1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E56211F57FE4500C50F1E /* AppDelegate.swift */; };
 		AB8E56271F57FE4500C50F1E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB8E56251F57FE4500C50F1E /* Main.storyboard */; };
@@ -25,7 +24,6 @@
 		AB218F7F1F616BDA0050F71B /* RecordingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingViewController.swift; sourceTree = "<group>"; };
 		AB218F861F632DFB0050F71B /* ProcessAudioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessAudioViewController.swift; sourceTree = "<group>"; };
 		AB218F8B1F656CB50050F71B /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
-		AB218F8D1F656CC70050F71B /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		AB218F8F1F6586E60050F71B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		AB8E561E1F57FE4500C50F1E /* quack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = quack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB8E56211F57FE4500C50F1E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -109,7 +107,6 @@
 				AB8E56211F57FE4500C50F1E /* AppDelegate.swift */,
 				AB8E56351F585D2A00C50F1E /* AudioExcerpt.swift */,
 				AB218F8B1F656CB50050F71B /* AudioManager.swift */,
-				AB218F8D1F656CC70050F71B /* Alert.swift */,
 				AB8E56331F5853A700C50F1E /* PersonCollectionViewCell.swift */,
 				AB218F821F616C320050F71B /* Other */,
 				AB218F831F616C550050F71B /* Storyboards */,
@@ -205,7 +202,6 @@
 				AB8E56341F5853A700C50F1E /* PersonCollectionViewCell.swift in Sources */,
 				AB8E56361F585D2A00C50F1E /* AudioExcerpt.swift in Sources */,
 				AB218F801F616BDA0050F71B /* RecordingViewController.swift in Sources */,
-				AB218F8E1F656CC70050F71B /* Alert.swift in Sources */,
 				AB8E56221F57FE4500C50F1E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -335,7 +331,7 @@
 				INFOPLIST_FILE = quack/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.marcobooth.quack;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teoandmarco.quack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -349,7 +345,7 @@
 				INFOPLIST_FILE = quack/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.marcobooth.quack;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teoandmarco.quack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
