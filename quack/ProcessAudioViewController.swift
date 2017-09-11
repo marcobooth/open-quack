@@ -9,9 +9,9 @@
 import UIKit
 
 class ProcessAudioViewController: UIViewController {
-
-    var excerptCounter : Int = 0
     var totalExcerpts : Int = 0
+    var excerptsTrimmed : Int = 0
+    
     var audioExcerpts : [AudioExcerpt]?
     var mainAudioFileLocation : URL?
     var filename : String?
@@ -30,24 +30,23 @@ class ProcessAudioViewController: UIViewController {
             return
         }
         
-        self.excerptCounter = audioExcerpts.count
         self.totalExcerpts = audioExcerpts.count
-        self.label.text = "Processing \(self.excerptCounter) audio files"
+        self.label.text = "Processing \(self.totalExcerpts) audio files"
         
         for excerpt in audioExcerpts {
-//            print("excerpt", excerpt)
             excerpt.trimAudio(url: mainAudioFileLocation, name: filename, reference: self)
         }
     }
     
     func trimmedExcerpt(success : Bool) {
         DispatchQueue.main.async {
-            self.excerptCounter -= 1
-            self.label.text = "Processing \(self.excerptCounter) audio files"
+            self.excerptsTrimmed += 1
+            self.label.text = "Processing \(self.totalExcerpts - self.excerptsTrimmed) audio files"
+
             let progress : Float = self.progressView.progress + (1.0 / Float(self.totalExcerpts))
             self.progressView.setProgress(progress, animated: false)
             
-            if self.excerptCounter == 0 {
+            if self.excerptsTrimmed == self.totalExcerpts {
                 self.sendPostRequest()
             }
         }
@@ -58,22 +57,21 @@ class ProcessAudioViewController: UIViewController {
     }
     
     func deleteAudioExcerpts() {
-        guard let audioExcerpts = self.audioExcerpts else {
-            finishedProcessing()
-            return
+        if let audioExcerpts = self.audioExcerpts {
+            for excerpt in audioExcerpts {
+                AudioManager.deleteAudioFile(url: excerpt.trimmedUrl)
+            }
         }
         
-        for excerpt in audioExcerpts {
-            AudioManager.sharedInstance.deleteAudioFile(url: excerpt.trimmedUrl)
-        }
         finishedProcessing()
     }
     
     func finishedProcessing() {
         self.label.text = "Finished processing"
+
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
             self.view.removeFromSuperview()
-            self.delegate?.reset()
+            self.delegate?.deleteAndUnwind()
         })
     }
 }

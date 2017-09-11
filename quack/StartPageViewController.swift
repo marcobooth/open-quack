@@ -31,15 +31,16 @@ class StartPageViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let name = textField.text, textField.text != "" else {
+        guard let name = textField.text, name != "" else {
             self.showErrorMessage(title: "Error", message: "Please provide a name for the event")
             return
         }
         
         if AVAudioSession.sharedInstance().recordPermission() == .denied {
-            self.showErrorMessage(title: "Permissions error", message: "This app does not have permission to record, please change this in Settings, under the Privacy option")
+            self.showErrorMessage(title: "Permissions error", message: "This app does not have permission to record, please change this in Settings under the Privacy option")
             return
         }
+
         segue.destination.title = name
     }
     

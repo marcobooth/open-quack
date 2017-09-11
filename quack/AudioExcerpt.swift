@@ -12,6 +12,7 @@ import AVFoundation
 class AudioExcerpt {
     
     var startTime : TimeInterval
+    var backdatedTime: TimeInterval
     var endTime : TimeInterval?
     var timeDifference : TimeInterval
     var trimmedUrl : URL?
@@ -21,45 +22,41 @@ class AudioExcerpt {
     init(startTime: TimeInterval, timeDifference: TimeInterval) {
         self.startTime = startTime
         self.timeDifference = timeDifference
+        
+        self.backdatedTime = self.startTime - self.timeDifference
+        if backdatedTime < 0 {
+            self.backdatedTime = TimeInterval(0.0)
+        }
     }
     
     func trimAudio(url: URL, name: String, reference: ProcessAudioViewController) {
-        let input = AVAsset(url: url)
-        
-        let exportSession = AVAssetExportSession(asset: input, presetName: AVAssetExportPresetPassthrough)
-        
         guard let endTime = self.endTime else {
             // we gots a problem
             return
         }
         
-        var startTime = self.startTime - self.timeDifference
-        if startTime < 0 {
-            startTime = TimeInterval(0.0)
-        }
-        print("start time", startTime)
-        
-        let startOfTrim = CMTimeMake(Int64(self.startTime), 1)
+        let startOfTrim = CMTimeMake(Int64(self.backdatedTime), 1)
         let endOfTrim = CMTimeMake(Int64(endTime), 1)
-        let exportTimeRange = CMTimeRangeFromTimeToTime(startOfTrim, endOfTrim)
         
+        let exportSession = AVAssetExportSession(asset: AVAsset(url: url), presetName: AVAssetExportPresetPassthrough)
         exportSession?.outputFileType = AVFileTypeWAVE
-        exportSession?.timeRange = exportTimeRange
+        exportSession?.timeRange = CMTimeRangeFromTimeToTime(startOfTrim, endOfTrim)
         
-        let startTimeDescription = startTime.description.replacingOccurrences(of: ".", with: "")
-        let endTimeDescription = endTime.description.replacingOccurrences(of: ".", with: "")
+        let excertStartDesc = self.backdatedTime.description.replacingOccurrences(of: ".", with: "")
+        let excertEndDesc = endTime.description.replacingOccurrences(of: ".", with: "")
         
         // https://stackoverflow.com/questions/29707622/swift-compiler-error-expression-too-complex-on-a-string-concatenation
-        let trimmedFilname = "\(name)-\(startTimeDescription)-\(endTimeDescription).wav"
+        let trimmedFilename = "\(name)-\(excertStartDesc)-\(excertEndDesc).wav"
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        self.trimmedUrl = documentsDirectory.appendingPathComponent(trimmedFilname)
+        self.trimmedUrl = documentsDirectory.appendingPathComponent(trimmedFilename)
+        
         // TODO: check if filename is already in use. Tried this but run into race condition, creates
         // file before it started export. Not sure if this is a problem though as using start and
         // end time
         exportSession?.outputURL = self.trimmedUrl
         
         exportSession?.exportAsynchronously(completionHandler: {
-            if AVAssetExportSessionStatus.completed == exportSession?.status {
+            if exportSession?.status == AVAssetExportSessionStatus.completed {
                 reference.trimmedExcerpt(success: true)
             } else {
                 reference.trimmedExcerpt(success: false)
@@ -68,6 +65,6 @@ class AudioExcerpt {
     }
     
     func sendToServer() {
-        
+        // TODO
     }
 }

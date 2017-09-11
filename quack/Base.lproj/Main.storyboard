@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rmO-8e-kIr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rmO-8e-kIr">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -136,7 +136,7 @@
                                 </constraints>
                                 <state key="normal" title="Record" image="record"/>
                                 <connections>
-                                    <action selector="createExcerpt:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lsk-Y6-KVP"/>
+                                    <action selector="createOrStopExcerpt:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qTA-Te-mFm"/>
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JIf-iM-Etd">
@@ -243,9 +243,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="JIf-iM-Etd" id="hjY-y9-mlL"/>
-                        <outlet property="label" destination="Rer-WK-wFA" id="x99-I4-tue"/>
                         <outlet property="noteButton" destination="M88-iS-yvT" id="CQv-zb-swq"/>
                         <outlet property="recordButton" destination="YnE-rn-Quz" id="AsY-ye-gSf"/>
+                        <outlet property="recordingIndicatorLabel" destination="Rer-WK-wFA" id="qLB-L4-AKK"/>
                         <segue destination="laJ-G0-Six" kind="unwind" identifier="unwindToStart" unwindAction="unwindToRootViewControllerWithSegue:" id="gHg-zc-px2"/>
                     </connections>
                 </viewController>
