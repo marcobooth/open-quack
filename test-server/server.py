@@ -28,9 +28,18 @@ class Server(BaseHTTPRequestHandler):
         self._set_headers()
 
     def do_POST(self):
-        # Doesn't do anything with posted data
-        self._set_headers()
-        self.wfile.write("<html><body><h1>POST!</h1></body></html>")
+        if self.path[:8] == '/excerpt':
+            length = self.headers['content-length']
+            data = self.rfile.read(int(length))
+            filename = self.path[9:]
+            print "filename:", filename, "\tlength:", length
+            
+            with open(filename, 'w') as f:
+                f.write(data.decode())
+
+            self.send_response(200)
+        else:
+            self.send_response(404)
 
 def run(server_class=HTTPServer, handler_class=Server, port=80):
     server_address = ('', port)
