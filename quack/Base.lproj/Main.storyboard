@@ -243,6 +243,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="JIf-iM-Etd" id="hjY-y9-mlL"/>
+                        <outlet property="label" destination="Rer-WK-wFA" id="x99-I4-tue"/>
                         <outlet property="noteButton" destination="M88-iS-yvT" id="CQv-zb-swq"/>
                         <outlet property="recordButton" destination="YnE-rn-Quz" id="AsY-ye-gSf"/>
                         <segue destination="laJ-G0-Six" kind="unwind" identifier="unwindToStart" unwindAction="unwindToRootViewControllerWithSegue:" id="gHg-zc-px2"/>

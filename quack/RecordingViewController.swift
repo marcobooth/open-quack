@@ -21,6 +21,7 @@ class RecordingViewController: UIViewController {
     @IBOutlet weak var collectionView : UICollectionView!
     @IBOutlet weak var recordButton : UIButton!
     @IBOutlet weak var noteButton: UIButton!
+    @IBOutlet weak var label: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,7 @@ class RecordingViewController: UIViewController {
         self.recordWithPermission()
         
         self.noteButton.isEnabled = false
+        self.label.text = "Currently listening"
     }
     
     @IBAction func stopEvent(_ sender: UIBarButtonItem) {
@@ -110,7 +112,7 @@ class RecordingViewController: UIViewController {
             self.noteButton.isEnabled = true
             self.currentExcerpt = AudioExcerpt(startTime: currentTime, timeDifference: 30.0)
             self.recordButton.setImage(#imageLiteral(resourceName: "square"), for: .normal)
-            self.recordButton.setTitle("Stop Recording", for: .normal)
+            self.label.text = "Recording (includes last 30 seconds)"
             self.lightBorder = true
             self.collectionView.reloadData()
         } else {
@@ -126,6 +128,7 @@ class RecordingViewController: UIViewController {
             return
         }
         
+        self.label.text = "Currently listening"
         self.noteButton.isEnabled = false
         
         if self.currentPersonSpeaking != nil {
@@ -152,7 +155,7 @@ class RecordingViewController: UIViewController {
             self.stopRecordingAlert(message: "Could not set up location to save file")
             return
         }
-//        print("writing to soundfile url: '\(recordingLocation)'")
+        print("writing to soundfile url: '\(recordingLocation)'")
 
         // https://stackoverflow.com/questions/9303875/fileexistsatpath-returning-no-for-files-that-exist
         if FileManager.default.fileExists(atPath: recordingLocation.path) {

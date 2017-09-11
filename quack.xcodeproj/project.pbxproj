@@ -11,6 +11,7 @@
 		AB218F871F632DFB0050F71B /* ProcessAudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB218F861F632DFB0050F71B /* ProcessAudioViewController.swift */; };
 		AB218F8C1F656CB50050F71B /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB218F8B1F656CB50050F71B /* AudioManager.swift */; };
 		AB218F8E1F656CC70050F71B /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB218F8D1F656CC70050F71B /* Alert.swift */; };
+		AB218F901F6586E60050F71B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB218F8F1F6586E60050F71B /* AVFoundation.framework */; };
 		AB8E56221F57FE4500C50F1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E56211F57FE4500C50F1E /* AppDelegate.swift */; };
 		AB8E56271F57FE4500C50F1E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB8E56251F57FE4500C50F1E /* Main.storyboard */; };
 		AB8E56291F57FE4500C50F1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB8E56281F57FE4500C50F1E /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 		AB218F861F632DFB0050F71B /* ProcessAudioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessAudioViewController.swift; sourceTree = "<group>"; };
 		AB218F8B1F656CB50050F71B /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		AB218F8D1F656CC70050F71B /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		AB218F8F1F6586E60050F71B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		AB8E561E1F57FE4500C50F1E /* quack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = quack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB8E56211F57FE4500C50F1E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AB8E56261F57FE4500C50F1E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -41,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB218F901F6586E60050F71B /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +81,7 @@
 		AB218F881F6427AC0050F71B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB218F8F1F6586E60050F71B /* AVFoundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

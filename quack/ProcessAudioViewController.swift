@@ -54,7 +54,7 @@ class ProcessAudioViewController: UIViewController {
     }
     
     func sendPostRequest() {
-//        deleteAudioExcerpts()
+        deleteAudioExcerpts()
     }
     
     func deleteAudioExcerpts() {
