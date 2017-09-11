@@ -8,6 +8,7 @@
 
 import Foundation
 import AVFoundation
+import Alamofire
 
 class AudioExcerpt {
     
@@ -15,6 +16,7 @@ class AudioExcerpt {
     var endTime : TimeInterval?
     var timeDifference : TimeInterval
     var trimmedUrl : URL?
+    var trimmedFilename: String?
     var peopleSpeaking = [(name: String, startTime: TimeInterval, endTime: TimeInterval)]()
     var notes = [(note: String, time: TimeInterval)]()
     
@@ -50,9 +52,11 @@ class AudioExcerpt {
         let endTimeDescription = endTime.description.replacingOccurrences(of: ".", with: "")
         
         // https://stackoverflow.com/questions/29707622/swift-compiler-error-expression-too-complex-on-a-string-concatenation
-        let trimmedFilname = "\(name)-\(startTimeDescription)-\(endTimeDescription).wav"
+        let filename = "\(name)-\(startTimeDescription)-\(endTimeDescription).wav"
+        self.trimmedFilename = filename
+        
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        self.trimmedUrl = documentsDirectory.appendingPathComponent(trimmedFilname)
+        self.trimmedUrl = documentsDirectory.appendingPathComponent(filename)
         // TODO: check if filename is already in use. Tried this but run into race condition, creates
         // file before it started export. Not sure if this is a problem though as using start and
         // end time
@@ -67,7 +71,36 @@ class AudioExcerpt {
         })
     }
     
-    func sendToServer() {
+    func toJSON() -> Parameters {
+//        var startTime : TimeInterval
+//        var endTime : TimeInterval?
+//        var timeDifference : TimeInterval
+//        var trimmedUrl : URL?
+//        var trimmedFilename: String?
+//        var peopleSpeaking = [(name: String, startTime: TimeInterval, endTime: TimeInterval)]()
+//        var notes = [(note: String, time: TimeInterval)]()
         
+        let peopleSpeakingJson = self.peopleSpeaking.map { (name, startTime, endTime) in
+            return [
+                "name": name,
+                "startTime": startTime,
+                "endTime": endTime,
+            ]
+        }
+        
+        let notesJson = self.notes.map { (note, time) in
+            return [
+                "text": note,
+                "timestamp": time,
+            ]
+        }
+        
+        return [
+            "startTime": self.startTime,
+            "endTime": self.endTime ?? 0,
+            "timeDifference": self.timeDifference,
+            "peopleSpeaking": peopleSpeakingJson,
+            "notes": notesJson,
+        ]
     }
 }

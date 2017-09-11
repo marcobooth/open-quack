@@ -66,7 +66,7 @@ class RecordingViewController: UIViewController {
             
             processingVC.modalPresentationStyle = .overCurrentContext
             processingVC.audioExcerpts = self.audioExcerpts
-            processingVC.filename = title
+            processingVC.eventName = title
             processingVC.delegate = self
             processingVC.mainAudioFileLocation = self.recordingFileLocation
             self.present(processingVC, animated: true, completion: nil)
