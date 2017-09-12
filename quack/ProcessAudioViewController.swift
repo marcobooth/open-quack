@@ -85,7 +85,11 @@ class ProcessAudioViewController: UIViewController {
                 
                 print("Uploading:", trimmedFilename)
                 
-                let uploadUrl = "http://quack.myvisaangel.com/excerpt/\(trimmedFilename)"
+                guard let encodedFilename = trimmedFilename.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+                    return
+                }
+                let uploadUrl = "http://quack.myvisaangel.com/excerpt/\(encodedFilename)"
+                
                 Alamofire.upload(trimmedUrl, to: uploadUrl).responseJSON { response in
                     print("done with \(trimmedFilename)")
                     uploadedExcerpts += 1
