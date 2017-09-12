@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class ProcessAudioViewController: UIViewController {
     var totalExcerpts : Int = 0
@@ -14,7 +15,7 @@ class ProcessAudioViewController: UIViewController {
     
     var audioExcerpts : [AudioExcerpt]?
     var mainAudioFileLocation : URL?
-    var filename : String?
+    var eventName : String?
     // should this be a protocol?
     var delegate : RecordingViewController?
     
@@ -25,7 +26,7 @@ class ProcessAudioViewController: UIViewController {
         super.viewDidLoad()
 
         // Think this makes sense. If no recordings were taken or nil, do nothing
-        guard let audioExcerpts = self.audioExcerpts, let mainAudioFileLocation = self.mainAudioFileLocation, let filename = self.filename else {
+        guard let audioExcerpts = self.audioExcerpts, audioExcerpts.count > 0, let mainAudioFileLocation = self.mainAudioFileLocation, let eventName = self.eventName else {
             finishedProcessing()
             return
         }
@@ -34,7 +35,7 @@ class ProcessAudioViewController: UIViewController {
         self.label.text = "Processing \(self.totalExcerpts) audio files"
         
         for excerpt in audioExcerpts {
-            excerpt.trimAudio(url: mainAudioFileLocation, name: filename, reference: self)
+            excerpt.trimAudio(url: mainAudioFileLocation, name: eventName, reference: self)
         }
     }
     
@@ -47,13 +48,56 @@ class ProcessAudioViewController: UIViewController {
             self.progressView.setProgress(progress, animated: false)
             
             if self.excerptsTrimmed == self.totalExcerpts {
-                self.sendPostRequest()
+                self.sendMetadata()
             }
         }
     }
     
-    func sendPostRequest() {
-        deleteAudioExcerpts()
+    func sendMetadata() {
+        guard let audioExcerpts = self.audioExcerpts else { return }
+        
+        var jsonExerpts = [Parameters]()
+        for excerpt in audioExcerpts {
+            jsonExerpts.append(excerpt.toJSON())
+        }
+        
+        let parameters: Parameters = [
+            "name": self.eventName ?? "Unknown",
+            "excerpts": jsonExerpts,
+        ]
+        
+        // Both calls are equivalent
+        Alamofire.request("http://quack.myvisaangel.com/metadata", method: .post, parameters: parameters, encoding: JSONEncoding.default).response { response in
+            DispatchQueue.main.async {
+                self.sendAudioExcerpts()
+            }
+        }
+    }
+    
+    func sendAudioExcerpts() {
+        var uploadedExcerpts = 0
+        
+        self.label.text = "Sending \(self.totalExcerpts - uploadedExcerpts) audio files to server"
+        
+        if let audioExcerpts = self.audioExcerpts {
+            for excerpt in audioExcerpts {
+                guard let trimmedUrl = excerpt.trimmedUrl, let trimmedFilename = excerpt.trimmedFilename else { return }
+                
+                print("Uploading:", trimmedFilename)
+                
+                let uploadUrl = "http://quack.myvisaangel.com/excerpt/\(trimmedFilename)"
+                Alamofire.upload(trimmedUrl, to: uploadUrl).responseJSON { response in
+                    print("done with \(trimmedFilename)")
+                    uploadedExcerpts += 1
+                    
+                    self.label.text = "Sending \(self.totalExcerpts - uploadedExcerpts) audio files to server"
+                    
+                    if uploadedExcerpts == self.totalExcerpts {
+                        self.deleteAudioExcerpts()
+                    }
+                }
+            }
+        }
     }
     
     func deleteAudioExcerpts() {
