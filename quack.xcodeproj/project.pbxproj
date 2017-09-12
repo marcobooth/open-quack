@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2CF028935058A4A623620066 /* Pods_quack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2315B149C55657B82AE78460 /* Pods_quack.framework */; };
 		AB218F801F616BDA0050F71B /* RecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB218F7F1F616BDA0050F71B /* RecordingViewController.swift */; };
 		AB218F871F632DFB0050F71B /* ProcessAudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB218F861F632DFB0050F71B /* ProcessAudioViewController.swift */; };
 		AB218F8C1F656CB50050F71B /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB218F8B1F656CB50050F71B /* AudioManager.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2315B149C55657B82AE78460 /* Pods_quack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_quack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB218F7F1F616BDA0050F71B /* RecordingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingViewController.swift; sourceTree = "<group>"; };
 		AB218F861F632DFB0050F71B /* ProcessAudioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessAudioViewController.swift; sourceTree = "<group>"; };
 		AB218F8B1F656CB50050F71B /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
@@ -34,6 +36,8 @@
 		AB8E56331F5853A700C50F1E /* PersonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonCollectionViewCell.swift; sourceTree = "<group>"; };
 		AB8E56351F585D2A00C50F1E /* AudioExcerpt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioExcerpt.swift; sourceTree = "<group>"; };
 		AB8E56371F5985FE00C50F1E /* StartPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartPageViewController.swift; sourceTree = "<group>"; };
+		D89ED31CF38E425EA4465BE1 /* Pods-quack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quack.debug.xcconfig"; path = "Pods/Target Support Files/Pods-quack/Pods-quack.debug.xcconfig"; sourceTree = "<group>"; };
+		E0D910B374E34005CC4A03A3 /* Pods-quack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quack.release.xcconfig"; path = "Pods/Target Support Files/Pods-quack/Pods-quack.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,12 +46,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB218F901F6586E60050F71B /* AVFoundation.framework in Frameworks */,
+				2CF028935058A4A623620066 /* Pods_quack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		63EE37C03956D471EA6FDCFA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D89ED31CF38E425EA4465BE1 /* Pods-quack.debug.xcconfig */,
+				E0D910B374E34005CC4A03A3 /* Pods-quack.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		AB218F811F616C0E0050F71B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				AB218F8F1F6586E60050F71B /* AVFoundation.framework */,
+				2315B149C55657B82AE78460 /* Pods_quack.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -90,6 +105,7 @@
 				AB8E56201F57FE4500C50F1E /* quack */,
 				AB8E561F1F57FE4500C50F1E /* Products */,
 				AB218F881F6427AC0050F71B /* Frameworks */,
+				63EE37C03956D471EA6FDCFA /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -122,9 +138,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AB8E56301F57FE4500C50F1E /* Build configuration list for PBXNativeTarget "quack" */;
 			buildPhases = (
+				F1F09AFD09CE1680F4133C1D /* [CP] Check Pods Manifest.lock */,
 				AB8E561A1F57FE4500C50F1E /* Sources */,
 				AB8E561B1F57FE4500C50F1E /* Frameworks */,
 				AB8E561C1F57FE4500C50F1E /* Resources */,
+				1AEDF8C4E92DDE7D9B5535AE /* [CP] Embed Pods Frameworks */,
+				92B21583AA9833EB214CA20A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -190,6 +209,62 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1AEDF8C4E92DDE7D9B5535AE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-quack/Pods-quack-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-quack/Pods-quack-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		92B21583AA9833EB214CA20A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-quack/Pods-quack-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F1F09AFD09CE1680F4133C1D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-quack-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AB8E561A1F57FE4500C50F1E /* Sources */ = {
@@ -325,6 +400,7 @@
 		};
 		AB8E56311F57FE4500C50F1E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D89ED31CF38E425EA4465BE1 /* Pods-quack.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 78F58JA687;
@@ -339,6 +415,7 @@
 		};
 		AB8E56321F57FE4500C50F1E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E0D910B374E34005CC4A03A3 /* Pods-quack.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 78F58JA687;

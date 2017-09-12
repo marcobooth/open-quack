@@ -111,7 +111,7 @@ class RecordingViewController: UIViewController {
             // begin processing - maybe should disable view while in processing..?
             processingVC.modalPresentationStyle = .overCurrentContext
             processingVC.audioExcerpts = self.audioExcerpts
-            processingVC.filename = title
+            processingVC.eventName = title
             processingVC.delegate = self
             processingVC.mainAudioFileLocation = self.recordingFileLocation
             
