@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rmO-8e-kIr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rmO-8e-kIr">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -23,14 +23,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rYc-jY-658">
-                                <rect key="frame" x="170" y="324" width="34" height="30"/>
+                                <rect key="frame" x="170" y="345.5" width="34" height="30"/>
                                 <state key="normal" title="Start"/>
                                 <connections>
                                     <segue destination="BYZ-38-t0r" kind="show" id="G4D-cv-Ns1"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2kf-f5-ayx">
-                                <rect key="frame" x="62.5" y="286" width="250" height="30"/>
+                                <rect key="frame" x="62.5" y="307.5" width="250" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="X0D-5i-8oW"/>
                                 </constraints>
@@ -39,28 +39,46 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKu-qG-y0l">
-                                <rect key="frame" x="142" y="257" width="90" height="21"/>
+                                <rect key="frame" x="142" y="279" width="90" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ccLogo" translatesAutoresizingMaskIntoConstraints="NO" id="tcU-Zi-EP3">
-                                <rect key="frame" x="37.5" y="114" width="300" height="60"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="md_anderson_logo" translatesAutoresizingMaskIntoConstraints="NO" id="tcU-Zi-EP3">
+                                <rect key="frame" x="38" y="114" width="300" height="115"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="Rzt-ea-W9H"/>
+                                    <constraint firstAttribute="height" constant="115" id="Rzt-ea-W9H"/>
                                     <constraint firstAttribute="width" constant="300" id="tzE-ht-mqX"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Powered by" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bGo-iE-DS3">
+                                <rect key="frame" x="142" y="582.5" width="89.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ccLogo" translatesAutoresizingMaskIntoConstraints="NO" id="lj9-M0-vvX">
+                                <rect key="frame" x="96.5" y="611" width="183" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="183" id="BHy-Mk-Y0w"/>
+                                    <constraint firstAttribute="height" constant="44" id="dWi-O0-05Q"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="183" id="waa-Wi-xec"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="lj9-M0-vvX" firstAttribute="top" secondItem="bGo-iE-DS3" secondAttribute="bottom" constant="8" id="2Gl-RW-Jmx"/>
                             <constraint firstItem="2kf-f5-ayx" firstAttribute="top" secondItem="bKu-qG-y0l" secondAttribute="bottom" constant="8" id="5dB-bn-as1"/>
                             <constraint firstItem="2kf-f5-ayx" firstAttribute="centerX" secondItem="a6Y-IK-haH" secondAttribute="centerX" id="86E-TT-9uT"/>
+                            <constraint firstItem="i0k-vZ-hNN" firstAttribute="top" secondItem="lj9-M0-vvX" secondAttribute="bottom" constant="12" id="HKq-a4-kXp"/>
                             <constraint firstItem="rYc-jY-658" firstAttribute="centerX" secondItem="a6Y-IK-haH" secondAttribute="centerX" id="Hdq-TM-TeP"/>
-                            <constraint firstItem="bKu-qG-y0l" firstAttribute="top" secondItem="tcU-Zi-EP3" secondAttribute="bottom" constant="83" id="MrR-Mo-tNF"/>
+                            <constraint firstItem="bKu-qG-y0l" firstAttribute="top" secondItem="tcU-Zi-EP3" secondAttribute="bottom" constant="50" id="MrR-Mo-tNF"/>
                             <constraint firstItem="tcU-Zi-EP3" firstAttribute="top" secondItem="6Zd-Xp-s1k" secondAttribute="bottom" constant="50" id="NKZ-yx-sEn"/>
                             <constraint firstItem="bKu-qG-y0l" firstAttribute="centerX" secondItem="a6Y-IK-haH" secondAttribute="centerX" id="RbY-r9-u9T"/>
                             <constraint firstItem="tcU-Zi-EP3" firstAttribute="centerX" secondItem="a6Y-IK-haH" secondAttribute="centerX" id="S1f-pC-kFm"/>
+                            <constraint firstItem="bGo-iE-DS3" firstAttribute="centerX" secondItem="a6Y-IK-haH" secondAttribute="centerX" id="Wgr-A0-M9H"/>
+                            <constraint firstItem="lj9-M0-vvX" firstAttribute="centerX" secondItem="a6Y-IK-haH" secondAttribute="centerX" id="cgF-QI-iua"/>
                             <constraint firstItem="rYc-jY-658" firstAttribute="top" secondItem="2kf-f5-ayx" secondAttribute="bottom" constant="8" id="fcZ-QO-dfd"/>
                         </constraints>
                     </view>
@@ -275,6 +293,7 @@
     </scenes>
     <resources>
         <image name="ccLogo" width="941" height="168"/>
+        <image name="md_anderson_logo" width="416" height="160"/>
         <image name="plus" width="30" height="30"/>
         <image name="record" width="40" height="40"/>
     </resources>
