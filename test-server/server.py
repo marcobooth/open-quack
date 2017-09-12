@@ -13,6 +13,7 @@ Send a POST request::
 Credit: https://gist.github.com/bradmontgomery/2219997
 """
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+import urllib
 
 class Server(BaseHTTPRequestHandler):
     def _set_headers(self):
@@ -31,7 +32,7 @@ class Server(BaseHTTPRequestHandler):
         if self.path[:8] == '/excerpt':
             length = self.headers['content-length']
             data = self.rfile.read(int(length))
-            filename = self.path[9:]
+            filename = urllib.unquote(self.path[9:]).decode('utf8') 
             print "filename:", filename, "\tlength:", length
             
             with open(filename, 'w') as f:
