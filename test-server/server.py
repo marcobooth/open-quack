@@ -35,8 +35,12 @@ class Server(BaseHTTPRequestHandler):
             print "filename:", filename, "\tlength:", length
             
             with open(filename, 'w') as f:
-                f.write(data.decode())
+                f.write(data)
 
+            self.send_response(200)
+        elif self.path == '/metadata':
+            length = self.headers['content-length']
+            print "metadata:", self.rfile.read(int(length))
             self.send_response(200)
         else:
             self.send_response(404)
