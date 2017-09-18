@@ -66,8 +66,8 @@
 			isa = PBXGroup;
 			children = (
 				AB218F861F632DFB0050F71B /* ProcessAudioViewController.swift */,
-				AB218F7F1F616BDA0050F71B /* RecordingViewController.swift */,
 				AB8E56371F5985FE00C50F1E /* StartPageViewController.swift */,
+				AB218F7F1F616BDA0050F71B /* RecordingViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";

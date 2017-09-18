@@ -67,7 +67,7 @@ class ProcessAudioViewController: UIViewController {
         ]
         
         // Both calls are equivalent
-        Alamofire.request("http://quack.myvisaangel.com/metadata", method: .post, parameters: parameters, encoding: JSONEncoding.default).response { response in
+        Alamofire.request("http://platformtest.cancercommons.org:4246/quack/metadata", method: .post, parameters: parameters, encoding: JSONEncoding.default).response { response in
             DispatchQueue.main.async {
                 self.sendAudioExcerpts()
             }
@@ -88,7 +88,7 @@ class ProcessAudioViewController: UIViewController {
                 guard let encodedFilename = trimmedFilename.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
                     return
                 }
-                let uploadUrl = "http://quack.myvisaangel.com/excerpt/\(encodedFilename)"
+                let uploadUrl = "http://platformtest.cancercommons.org:4246/quack/excerpt/\(encodedFilename)"
                 
                 Alamofire.upload(trimmedUrl, to: uploadUrl).responseJSON { response in
                     print("done with \(trimmedFilename)")

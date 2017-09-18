@@ -29,24 +29,27 @@ class Server(BaseHTTPRequestHandler):
         self._set_headers()
 
     def do_POST(self):
-        if self.path[:8] == '/excerpt':
+        if self.path[:14] == '/quack/excerpt':
+            print "Data post heard!"
             length = self.headers['content-length']
+            print "Data length=",length
             data = self.rfile.read(int(length))
-            filename = urllib.unquote(self.path[9:]).decode('utf8') 
+            print "Data read!"
+            filename = urllib.unquote(self.path[15:]).decode('utf8') 
             print "filename:", filename, "\tlength:", length
             
             with open(filename, 'w') as f:
                 f.write(data)
 
             self.send_response(200)
-        elif self.path == '/metadata':
+        elif self.path == '/quack/metadata':
             length = self.headers['content-length']
             print "metadata:", self.rfile.read(int(length))
             self.send_response(200)
         else:
             self.send_response(404)
 
-def run(server_class=HTTPServer, handler_class=Server, port=80):
+def run(server_class=HTTPServer, handler_class=Server, port=4246):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
     print 'Starting httpd...'
