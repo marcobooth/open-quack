@@ -37,13 +37,12 @@ class AudioExcerpt {
             return
         }
         
-        let startOfTrim = CMTimeMake(Int64(self.backdatedTime), 1)
-        let endOfTrim = CMTimeMake(Int64(endTime), 1)
+        let startOfTrim = CMTimeMake(Int64(self.backdatedTime * 100), 100)
+        let endOfTrim = CMTimeMake(Int64(endTime * 100), 100)
         
         let exportSession = AVAssetExportSession(asset: AVAsset(url: url), presetName: AVAssetExportPresetPassthrough)
         exportSession?.outputFileType = AVFileTypeWAVE
         exportSession?.timeRange = CMTimeRangeFromTimeToTime(startOfTrim, endOfTrim)
-        
         let excertStartDesc = self.backdatedTime.description.replacingOccurrences(of: ".", with: "")
         let excertEndDesc = endTime.description.replacingOccurrences(of: ".", with: "")
         
