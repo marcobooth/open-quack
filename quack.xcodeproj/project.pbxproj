@@ -143,7 +143,6 @@
 				AB8E561B1F57FE4500C50F1E /* Frameworks */,
 				AB8E561C1F57FE4500C50F1E /* Resources */,
 				1AEDF8C4E92DDE7D9B5535AE /* [CP] Embed Pods Frameworks */,
-				92B21583AA9833EB214CA20A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -229,21 +228,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-quack/Pods-quack-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		92B21583AA9833EB214CA20A /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-quack/Pods-quack-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F1F09AFD09CE1680F4133C1D /* [CP] Check Pods Manifest.lock */ = {
